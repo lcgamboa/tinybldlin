@@ -1,0 +1,11 @@
+<!DOCTYPE piklab>
+<piklab>
+  <general>
+    <device>18F452</device>
+    <tool>gputils</tool>
+    <files>
+      <item>tinybld18f452.asm</item>
+    </files>
+  </general>
+  <editors/>
+</piklab>

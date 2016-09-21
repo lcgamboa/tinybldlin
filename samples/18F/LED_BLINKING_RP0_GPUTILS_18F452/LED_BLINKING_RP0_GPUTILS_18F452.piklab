@@ -1,0 +1,14 @@
+<!DOCTYPE piklab>
+<piklab>
+  <general>
+    <device>18F452</device>
+    <tool>gputils</tool>
+    <files>
+      <item>LED_BLINKING_RP0_GPUTILS_18F452.asm</item>
+    </files>
+    <opened_files>
+      <item>LED_BLINKING_RP0_GPUTILS_18F452.asm</item>
+    </opened_files>
+  </general>
+  <editors/>
+</piklab>

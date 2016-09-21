@@ -1,0 +1,13 @@
+<!DOCTYPE piklab>
+<piklab>
+  <general>
+    <device>16F877A</device>
+    <tool>ccsc</tool>
+    <opened_files>
+      <item>LED_BLINKING_RP0_CCS_16F877A.c</item>
+    </opened_files>
+    <files>
+      <item>LED_BLINKING_RP0_CCS_16F877A.c</item>
+    </files>
+  </general>
+</piklab>

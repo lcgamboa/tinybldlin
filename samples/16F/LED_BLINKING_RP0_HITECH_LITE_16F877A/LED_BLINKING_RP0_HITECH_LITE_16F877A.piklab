@@ -1,0 +1,11 @@
+<!DOCTYPE piklab>
+<piklab>
+  <general>
+    <device>16F877A</device>
+    <tool>picclite</tool>
+    <files>
+      <item>LED_BLINKING_RP0_HITECH_LITE_16F877A.c</item>
+    </files>
+  </general>
+  <editors/>
+</piklab>

@@ -1,0 +1,15 @@
+<!DOCTYPE piklab>
+<piklab>
+  <general>
+    <device>18F452</device>
+    <tool>picc18</tool>
+    <files>
+      <item>USART_HITECH_PICC18_LITE_18F452.c</item>
+      <item>usart.h</item>
+    </files>
+    <opened_files>
+      <item>USART_HITECH_PICC18_LITE_18F452.c</item>
+    </opened_files>
+  </general>
+  <editors/>
+</piklab>

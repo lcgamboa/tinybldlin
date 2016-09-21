@@ -1,0 +1,15 @@
+<!DOCTYPE piklab>
+<piklab>
+  <general>
+    <device>16F877A</device>
+    <tool>sdcc</tool>
+    <files>
+      <item>USART_SDCC_16F877A.c</item>
+      <item>usart.h</item>
+    </files>
+    <opened_files>
+      <item>USART_SDCC_16F877A.c</item>
+    </opened_files>
+  </general>
+  <editors/>
+</piklab>

@@ -1,0 +1,17 @@
+<!DOCTYPE piklab>
+<piklab>
+  <general>
+    <device>16F877A</device>
+    <tool>gputils</tool>
+    <files>
+      <item>LED_BLINKING_RP0_GPUTILS_16F877A.asm</item>
+    </files>
+    <opened_files>
+      <item>LED_BLINKING_RP0_GPUTILS_16F877A.asm</item>
+    </opened_files>
+    <watched_registers>
+      <item>6 2 </item>
+    </watched_registers>
+  </general>
+  <editors/>
+</piklab>
