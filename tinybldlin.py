@@ -3,8 +3,8 @@
 
 ###############################################################################
 ##tinybldlin.py Writed by Fernando Juarez V.
-##
-##CopyLeft  2009
+##              modified by Luis Claudio Gamboa Lopes
+##CopyLeft  2016
 ##
 ##This program is free software: you can redistribute it and/or modify
 ##it under the terms of the GNU General Public License as published by
@@ -230,7 +230,7 @@ class Tinybldlin():
 
             print 'Not found press PIC reset...'
             
-            type,max_flash,family,message=detectpic.check_pic(PORT,BAUD,RESET_RTS)
+            type,max_flash,family,message,bsize=detectpic.check_pic(PORT,BAUD,RESET_RTS)
 
             if max_flash!=None:
                 break
@@ -259,7 +259,7 @@ class Tinybldlin():
         
         start = time.time()
         #Transfering file
-        write_status=transferhex.transfer_hex(Tinybldlin,hex_file_path,PORT,BAUD,type,max_flash,family,rts)
+        write_status=transferhex.transfer_hex(Tinybldlin,hex_file_path,PORT,BAUD,type,max_flash,family,rts,bsize)
         end = time.time()
         
         if write_status=='OK':
@@ -311,7 +311,7 @@ class Tinybldlin():
                 gtk.main_iteration()
                 self.progress_bar.set_fraction(progress)
 
-            type,max_flash,family,message=detectpic.check_pic(PORT,BAUD,RESET_RTS)
+            type,max_flash,family,message,bsize=detectpic.check_pic(PORT,BAUD,RESET_RTS)
 
             if max_flash!=None:
                 break
@@ -466,7 +466,7 @@ class Tinybldlin():
             while gtk.events_pending():
                 gtk.main_iteration()
 
-            type,max_flash,family,message=detectpic.check_pic(port,baud,rts)
+            type,max_flash,family,message,bsize=detectpic.check_pic(port,baud,rts)
 
             if max_flash!=None:
                 break
@@ -481,7 +481,7 @@ class Tinybldlin():
             
          
         start = time.time()
-        write_status=transferhex.transfer_hex(None,file,port,baud,type,max_flash,family,rts)
+        write_status=transferhex.transfer_hex(None,file,port,baud,type,max_flash,family,rts,bsize)
         end = time.time()
         
         
@@ -513,7 +513,7 @@ class Tinybldlin():
             while gtk.events_pending():
                 gtk.main_iteration()
 
-            type,max_flash,family,message=detectpic.check_pic(port,baud,rts)
+            type,max_flash,family,message,bsize=detectpic.check_pic(port,baud,rts)
 
             if max_flash!=None:
                 break

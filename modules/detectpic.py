@@ -79,7 +79,7 @@ def check_pic(PORT,BAUD,RESET_RTS):
         
     pt=ord(ret[0])
         
-    type, max_flash, family=pic_type(pt)
+    type, max_flash, family, bsize=pic_type(pt)
     message = '\n Found:'+ type
-    return type,max_flash,family,message
+    return type,max_flash,family,message, bsize
     

@@ -13,7 +13,8 @@ except:
             \n If you are running ubuntu open a terminal and type:\
             \n sudo apt-get install python-gtk2  '
 
-def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts):
+def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts,bsize):
+        
     
     global s    
     s=serial.Serial(port,baud,timeout=1)
@@ -79,11 +80,11 @@ def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts):
                     
                     if address < 0x08:
                         if family=="16F8XX" or family=="16F8X":
-                            pic_mem[address+2*max_flash-200]=eval("0x"+data)
+                            pic_mem[address+2*max_flash-2*bsize]=eval("0x"+data)
                             
                         if family=="18F":
-                            pic_mem[address+max_flash-200]=eval("0x"+data)
-                            
+                            pic_mem[address+max_flash-bsize]=eval("0x"+data)
+ 
                         if family=="18F" or family=="16F8XX":
                             pic_mem[address]=eval("0x"+data)
                             
@@ -100,7 +101,7 @@ def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts):
     if family=="16F8XX":
         hblock=8 #Hex Block 8 bytes
         block=4  #PIC Block 4 instructions (8 memory positions)
-        maxpos=max_flash-100+4
+        maxpos=max_flash-bsize+4
         minpos=0
         
         #searching initializaded pclath
@@ -166,20 +167,20 @@ def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts):
                         
             else:
 
-                pic_mem[0+2*max_flash-200]=0x8a
-                pic_mem[1+2*max_flash-200]=0x01
+                pic_mem[0+2*max_flash-2*bsize]=0x8a
+                pic_mem[1+2*max_flash-2*bsize]=0x01
                 
                 if pic_repaid.has_key(0):
-                    pic_mem[2+2*max_flash-200]=pic_repaid[0]
-                    pic_mem[3+2*max_flash-200]=pic_repaid[1]
+                    pic_mem[2+2*max_flash-2*bsize]=pic_repaid[0]
+                    pic_mem[3+2*max_flash-2*bsize]=pic_repaid[1]
                     
                 if pic_repaid.has_key(2):
-                    pic_mem[4+2*max_flash-200]=pic_repaid[2]
-                    pic_mem[5+2*max_flash-200]=pic_repaid[3]
+                    pic_mem[4+2*max_flash-2*bsize]=pic_repaid[2]
+                    pic_mem[5+2*max_flash-2*bsize]=pic_repaid[3]
                     
                 if pic_repaid.has_key(3):
-                    pic_mem[6+2*max_flash-200]=pic_repaid[4]
-                    pic_mem[7+2*max_flash-200]=pic_repaid[5]           
+                    pic_mem[6+2*max_flash-2*bsize]=pic_repaid[4]
+                    pic_mem[7+2*max_flash-2*bsize]=pic_repaid[5]           
                 
                     
                 message= '\n sucessfully repaired.,'
@@ -206,7 +207,7 @@ def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts):
         hblock=64 #Hex Block 64 bytes
         block=32  #PIC Block 32 instructions (64 memory positions)
         
-        maxpos=max_flash-100+4
+        maxpos=max_flash-bsize+4
         minpos=0
         
         pic_mem[0]=0x8A
@@ -219,7 +220,7 @@ def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts):
         # The blocks have to be written using a 64 bytes boundary
         # so the first 8 bytes (reserved by TinyPic) will be re writen
         # So we have to include a goto max_flash-200+8
-        goto_add=((max_flash-200+8)/2)
+        goto_add=((max_flash-bsize+8)/2)
         hh_goto=(goto_add/0x10000)&0x0F
         h_goto=(goto_add/0x100)&0xFF
         l_goto=goto_add&0xFF
@@ -230,8 +231,9 @@ def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts):
         pic_mem[3]=0xF0+hh_goto
         block=64
         hblock=64
-        maxpos=max_flash-200+8
+        maxpos=max_flash-bsize+8
         minpos=0
+        
         
     l=len(pic_mem)+8
     c = l/hblock
