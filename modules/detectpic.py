@@ -50,6 +50,7 @@ def check_pic(PORT,BAUD,RESET_RTS):
     type=None
     max_flash=None
     family=None
+    bsize=None
 
     ser = serial.Serial(PORT,BAUD,timeout=0.1)
     if RESET_RTS:
@@ -70,12 +71,12 @@ def check_pic(PORT,BAUD,RESET_RTS):
     #In case there was no answer from pic
     if len(ret)!=2:
         message='Not found, \n ERROR!'
-        return type,max_flash,family,message
+        return type,max_flash,family,message, bsize
            
     #In case of pic not recognized
     if ret[1]!= "K":
         message="\n Error, PIC not recognized (protocol error)\n"
-        return type,max_flash,family,message
+        return type,max_flash,family,message, bsize
         
     pt=ord(ret[0])
         
