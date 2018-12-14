@@ -1,16 +1,15 @@
-import gtk
-#import gi
-#gi.require_version('Gtk', '3.0')
-#from gi.repository import Gtk as gtk
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk as gtk
 
 def browse_hexfile(gui,filepath):
     
         file_open = gtk.FileChooserDialog(  title="Select HexFile",
-                                            action=gtk.FILE_CHOOSER_ACTION_OPEN,
+                                            action=gtk.FileChooserAction.OPEN, 
                                             buttons=(   gtk.STOCK_CANCEL,
-                                                        gtk.RESPONSE_CANCEL,
+                                                        gtk.ResponseType.CANCEL,
                                                         gtk.STOCK_OPEN,
-                                                        gtk.RESPONSE_OK))
+                                                        gtk.ResponseType.OK))
                                                         
         result = ""
         path=filepath.split('/')
@@ -42,7 +41,7 @@ def browse_hexfile(gui,filepath):
 
         """Init the return value"""
         
-        if file_open.run() == gtk.RESPONSE_OK:
+        if file_open.run() == gtk.ResponseType.OK:
             result = file_open.get_filename()
             
         file_open.destroy()

@@ -1,5 +1,4 @@
-import ConfigParser
-#from six.moves import configparser
+from six.moves import configparser as ConfigParser
 import os
 
 def save_settigs(SECTION,NAME,VALUE):

@@ -3,7 +3,9 @@ try:
 except ImportError:
     raise ImportError("Se requiere el modulo python-serial")
 
-import gtk
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk as gtk
 import sys
 import time
 

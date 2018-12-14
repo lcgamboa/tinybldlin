@@ -39,6 +39,7 @@ try:
     gi.require_version('Gtk', '3.0')
     from gi.repository import Gtk as gtk
 except:
+    #FIXME
     print( 'You need python-gtk2 please install it...\
             \n If you are running ubuntu open a terminal and type:\
             \n sudo apt-get install python-gtk2  ')
@@ -630,7 +631,7 @@ class Tinybldlin():
         
     def on_terminal_key_press_event(self, widget, event):
         
-        type=self.tx_type_combo.child.get_text()
+        type=self.tx_type_combo.get_child().get_text()
         data=event.keyval
         if event.keyval==gtk.keysyms.Return:
             data=0x0D
@@ -657,9 +658,9 @@ class Tinybldlin():
         
     def on_window1_destroy(self, widget):
         self.close=0
-        file_path = self.hexfile_combo
-        baud_rate = self.speed_combo
-        speed_terminal=self.speed_terminal_combo
+        file_path = self.hexfile_combo.get_child()
+        baud_rate = self.speed_combo.get_child()
+        speed_terminal=self.speed_terminal_combo.get_child()
 
         Width,Height= self.window1.get_size()
        
