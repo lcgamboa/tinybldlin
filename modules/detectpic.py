@@ -25,8 +25,8 @@ try:
     
 except ImportError:
 
-    print "you must have python-serial installed"
-    print 'if you are using Debian/Ubuntu type $sudo apt-get install python-serial'
+    print ("you must have python-serial installed")
+    print ('if you are using Debian/Ubuntu type $sudo apt-get install python3-serial')
     
 
 from pictype import pic_type

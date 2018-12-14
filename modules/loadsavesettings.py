@@ -1,4 +1,5 @@
 import ConfigParser
+#from six.moves import configparser
 import os
 
 def save_settigs(SECTION,NAME,VALUE):
@@ -8,7 +9,7 @@ def save_settigs(SECTION,NAME,VALUE):
     sections=["FILES","PIC","WINDOW","OPTIONS","TERMINAL"]
 
     if not cfg.read(configfile):
-        print "No existe el archivo intentando crear uno nuevo"
+        print ("No existe el archivo intentando crear uno nuevo")
         for disp in sections:
             try:
                 cfg.add_section(disp) 

@@ -5,13 +5,13 @@ import sys
 try:
     import serial
 except:
-    print 'You need python-serial module'
+    print ('You need python-serial module')
 try:
     import gtk
 except:
-    print 'You need python-gtk2 please install it...\
+    print ('You need python-gtk2 please install it...\
             \n If you are running ubuntu open a terminal and type:\
-            \n sudo apt-get install python-gtk2  '
+            \n sudo apt-get install python-gtk2  ')
 
 def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts,bsize):
         
@@ -27,7 +27,7 @@ def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts,bsize):
     try:
         f=open(filename, 'r')
     except IOError:
-        print "Can't open file:"+filename+"\n\n"
+        print ("Can't open file:"+filename+"\n\n")
         return  'Fail'
     
     hexfile=f.readlines()
@@ -42,10 +42,10 @@ def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts,bsize):
         # Check for the record begining
         if rec[0]!=":":
             if rec[0]==";":
-                print rec
+                print (rec)
                 
             else:
-                print "Hex file not recognized:\nLine: "+str(act)+" File: "+filename+"\n\n"
+                print ("Hex file not recognized:\nLine: "+str(act)+" File: "+filename+"\n\n")
                 return  'Fail'
         if rec[0]==":":
             # Read the byte count
@@ -62,11 +62,11 @@ def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts,bsize):
             record_type=eval("0x"+rec[7:9])
           
             if rec[0:15]==':020000040030CA':
-                print 'Warning: Config found just writing data'
+                print ('Warning: Config found just writing data')
                 break
             
             if rec[0:15]==':0200000400F00A':
-                print 'Warning: eeprom found just writing data'
+                print ('Warning: eeprom found just writing data')
                 break
 
             # Only use the data register
@@ -146,7 +146,7 @@ def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts,bsize):
                      \n some directive to enable the use of bootloaders,\
                      \n or maybe you could fix it by adding an interrupt\
                      \n handler to your program.'
-            print message
+            print (message)
             
             if gui != None:
                 gui.write_message(message)
@@ -154,14 +154,14 @@ def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts,bsize):
         if pclath!=2:
             
             message= '\n WARNING: PCLATH not fully initialised before GOTO! ... '
-            print message
+            print (message)
             
             if gui != None:
                 gui.write_message(message)
                 
             if k>6 or k==0:
                 message= '\n could not repaid\n Maybe you should use some directive in your compiler\n to enable the use of bootloaders'
-                print message
+                print (message)
                 if gui != None:
                     gui.write_message(message)
                         
@@ -184,7 +184,7 @@ def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts,bsize):
                 
                     
                 message= '\n sucessfully repaired.,'
-                print message
+                print (message)
                 if gui != None:
                     gui.write_message(message)
             
@@ -251,7 +251,7 @@ def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts,bsize):
             elif family=="18F":
                 hex_pos=pic_pos+j
             else :
-                print "Error, family not suported:",family
+                print ("Error, family not suported:",family)
                 return 'Fail'
 
             
@@ -267,7 +267,7 @@ def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts,bsize):
                 gui.progress_bar.set_fraction(progress)
                 
             elif gui == None and progress<=1:
-                print str(int(progress*100)) + '%  Writed'
+                print (str(int(progress*100)) + '%  Writed')
             i=i+1
             ret=write_mem(pic_pos,mem_block,family,rts)
             if ret!="K":
@@ -322,7 +322,7 @@ def write_mem(pic_pos,mem_block,family,rts):
     #ret="K"
     
     if ret!="K":
-        print "Error writing to the memory position: "+ hex(pic_pos)+"\n\n"
+        print ("Error writing to the memory position: "+ hex(pic_pos)+"\n\n")
         
     while gtk.events_pending():
         gtk.main_iteration()

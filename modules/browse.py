@@ -1,4 +1,7 @@
 import gtk
+#import gi
+#gi.require_version('Gtk', '3.0')
+#from gi.repository import Gtk as gtk
 
 def browse_hexfile(gui,filepath):
     
@@ -22,7 +25,7 @@ def browse_hexfile(gui,filepath):
             file_open.set_current_folder(path_hex)
             
         except:
-            print 'choose a valid hex file'
+            print ('choose a valid hex file')
 
         """Create and add the Images filter"""		
         filter = gtk.FileFilter()

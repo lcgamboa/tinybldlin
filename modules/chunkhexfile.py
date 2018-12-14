@@ -76,7 +76,7 @@ def chunk_hexfile(filename):
                 if chs!=crc:
                     
                     message_crc ='\n Warning! CRC failed on line '+str(row_counter)+'\n'
-                    print '\n Warning! CRC failed on line '+str(row_counter)+'\n',
+                    print ('\n Warning! CRC failed on line '+str(row_counter)+'\n')
                     
             elif record_type==0x02 and INHX!='INX32M':
                 INHX='INX16M'
@@ -100,11 +100,11 @@ def chunk_hexfile(filename):
 
                 if rec[0]==";":
                     message=str(rec)
-                    print message,
+                    print (message)
                     
                 else:
                     message="Hex file not recognized:\nLine: "+str(row_counter)+ " File: "+filename+"\n\n"
-                    print message
+                    print (message)
                     return None
         
     message ='\n HEX:'+ age+' old,'+ INHX + ','+pic_series+cfg+eeprom+',total='+str(total)+ ' bytes.'

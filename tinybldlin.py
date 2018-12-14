@@ -23,6 +23,7 @@
 import os
 import sys
 import gobject
+#from gi.repository import GObject as gobject
 sys.path.append("modules")
 import searchserial
 import detectpic
@@ -32,12 +33,17 @@ import transferhex
 import time
 import browse
 import terminal
+
+
 try:
     import gtk
+    #import gi
+    #gi.require_version('Gtk', '3.0')
+    #from gi.repository import Gtk as gtk
 except:
-    print 'You need python-gtk2 please install it...\
+    print( 'You need python-gtk2 please install it...\
             \n If you are running ubuntu open a terminal and type:\
-            \n sudo apt-get install python-gtk2  '
+            \n sudo apt-get install python-gtk2  ')
             
 
 
@@ -96,17 +102,18 @@ class Tinybldlin():
             self.terminal_window    = builder.get_object('scrolled_terminal_window')
             self.speed_terminal_combo     =builder.get_object('speed_terminal_combo')
             
-            self.terminal_data_entry= self.tx_data_combo.child
+            self.terminal_data_entry= self.tx_data_combo
             
-            self.terminal_data_entry.connect("activate", self.on_terminal_data_entry, self.terminal_data_entry)
+            #FIXME
+            #self.terminal_data_entry.connect("activate", self.on_terminal_data_entry, self.terminal_data_entry)
             
             self.window1.show()
 
             #setting model to hexfile comboboxentry
             model = gtk.ListStore(str)
             self.hexfile_combo.set_model(model)
-            self.hexfile_combo.set_text_column(0)
-            self.hex_file_entry=self.hexfile_combo.child
+            #self.hexfile_combo.set_text_column(0)
+            self.hex_file_entry=self.hexfile_combo
 
             #Populating baud rates combo
             speeds = ('115200','57600','38400','19200','9600')
@@ -114,8 +121,8 @@ class Tinybldlin():
             self.set_model_from_list(self.speed_terminal_combo,speeds)
             self.speed_combo.set_active(0)
             self.speed_terminal_combo.set_active(0)
-            speed_entry= self.speed_combo.child
-            speed_terminal_entry= self.speed_terminal_combo.child
+            speed_entry= self.speed_combo
+            speed_terminal_entry= self.speed_terminal_combo
             
             #Populating Rx Tx data types
             tx_data_types = ('char','char\\','Type','TypEcho')
@@ -149,7 +156,7 @@ class Tinybldlin():
                 speed_terminal_entry.set_text(speed_terminal)
                 
             except:
-                print 'probably theres no .tinybld'
+                print ('probably theres no .tinybld')
 
             #defining some inter variables
             self.want_to_abort=False
@@ -160,7 +167,7 @@ class Tinybldlin():
             
         else:
             file,port,baud,rts,check= self.treat_args(options)
-            print file,port,baud,rts,check
+            print (file,port,baud,rts,check)
             if file==None:
                 sys.exit()
             if check==1:
@@ -188,7 +195,7 @@ class Tinybldlin():
 
         #If tinybld cant connect to selected port return error message
         if c==False:
-            print message
+            print (message)
             self.write_message(message)
             while gtk.events_pending():
                 gtk.main_iteration()
@@ -228,7 +235,7 @@ class Tinybldlin():
                 gtk.main_iteration()
                 self.progress_bar.set_fraction(progress)
 
-            print 'Not found press PIC reset...'
+            print ('Not found press PIC reset...')
             
             type,max_flash,family,message,bsize=detectpic.check_pic(PORT,BAUD,RESET_RTS)
 
@@ -288,7 +295,7 @@ class Tinybldlin():
 
         #If tinybld cant connect to selected port return error message
         if c==False:
-            print message
+            print (message)
             self.write_message(message)
             self.abort_button.hide()
             self.status_icon.set_from_file(red)
@@ -320,12 +327,12 @@ class Tinybldlin():
                 self.want_to_abort=False
                 break
             
-            print 'Not found press PIC reset...'
+            print ('Not found press PIC reset...')
 
         #if after ask several times PIC ide tinybld dont have a vali max_flask
         #return an error message
         if max_flash==None:
-            print message
+            print (message)
             self.write_message(message)
             self.abort_button.hide()
             self.status_icon.set_from_file(red)
@@ -333,7 +340,7 @@ class Tinybldlin():
             gobject.timeout_add(2000, self.on_timeout)
             return type,max_flash,family
 
-        print message
+        print (message)
         
         self.write_message(message)
         self.progress_bar.set_fraction(0)
@@ -344,7 +351,7 @@ class Tinybldlin():
 
         
     def on_abort_button_clicked(self, widget):
-        print 'aborted'
+        print ('aborted')
         self.want_to_abort=True
         
     def on_search_button_clicked(self, widget):
@@ -367,7 +374,7 @@ class Tinybldlin():
                 
     def on_textview1_key_press_event(self, widget, key):
         
-        print 'on_textview1_key_press_event'
+        print ('on_textview1_key_press_event')
         
     def on_rts_checkbutton_toggled(self, widget):
         return
@@ -378,9 +385,10 @@ class Tinybldlin():
         for i in items:
             model.append([i])
         cb.set_model(model)
-        if type(cb) == gtk.ComboBoxEntry:
-            cb.set_text_column(0)
-        elif type(cb) == gtk.ComboBox:
+        #if type(cb) == gtk.ComboBoxText:
+            #cb.set_text_column(0)
+        #el
+        if type(cb) == gtk.ComboBox:
             cell = gtk.CellRendererText()
             cb.pack_start(cell, True)
             cb.add_attribute(cell, 'text', 0)
@@ -415,15 +423,15 @@ class Tinybldlin():
                     
                     opt=options[i][1:]                    
                     if opt=='version' or opt=='-version':
-                        print 'Version 0.7'
+                        print ('Version 0.7')
                         
                     elif opt=='help' or opt=='-help':
-                        print   '--version : Prints the version number\
+                        print   ('--version : Prints the version number\
                                 \n--help    : Display this help\
                                 \n--file yourhexfile.hex or -file yourhexfile.hex : Intel Hex formated file to be bootloaded\
                                 \n--port PORT or -port PORT : Set your serial port; default: /dev/ttyUSB0\
                                 \n--baud BAUD or -baud BAUD : Baud rate to be used during communication; default: 115200 \
-                                \n--rts 1,0 or -rts 1,0 : Set RTS on/off ' 
+                                \n--rts 1,0 or -rts 1,0 : Set RTS on/off ') 
                         return file,port,baud,rts,check
                                 
                     elif opt=='file' or opt=='-file' or opt=='f' or opt=='-f':
@@ -442,7 +450,7 @@ class Tinybldlin():
                         check=1
                         return file,port,baud,rts,check
         except:
-            print 'check options'
+            print ('check options')
             
         return file,port,baud,rts,check
     
@@ -453,13 +461,13 @@ class Tinybldlin():
 
         #If tinybld cant connect to selected port return error message
         if c==False:
-            print message,
+            print (message),
             return
         else:
-            print message,
+            print (message),
         
         #chunkhexfile.chunk_hexfile(file) 
-        print '\n Searching for PIC ...',
+        print ('\n Searching for PIC ...')
         
         for i in range(0,20):
             
@@ -471,13 +479,13 @@ class Tinybldlin():
             if max_flash!=None:
                 break
 
-            print ' press RESET'
+            print (' press RESET')
 
         if max_flash==None:
-            print ' pic not found'
+            print (' pic not found')
             return
         else:
-            print message
+            print (message)
             
          
         start = time.time()
@@ -486,27 +494,27 @@ class Tinybldlin():
         
         
         if write_status=='OK':
-            print 'Write OK at ' +str(begin)+' time: '+str(end-start)[0:5]+' sec'
+            print ('Write OK at ' +str(begin)+' time: '+str(end-start)[0:5]+' sec')
         else:
-            print '\n Error writing'
+            print ('\n Error writing')
             return
    
     def check_pic_terminal(self,port,baud,rts):
         
-        print 'checking pic'
+        print ('checking pic')
         c,message=detectpic.check_conection(port, baud)
 
         #If tinybld cant connect to selected port return error message
         if c==False:
-            print message,
+            print (message),
             return
 
         else:
-            print message,
+            print (message),
         
         #chunkhexfile.chunk_hexfile(file)
         
-        print '\n Searching for PIC ...',
+        print ('\n Searching for PIC ...')
         
         for i in range(0,20):
             
@@ -518,13 +526,13 @@ class Tinybldlin():
             if max_flash!=None:
                 break
 
-            print ' press RESET'
+            print (' press RESET')
    
         if max_flash==None:
-            print ' pic not found'
+            print (' pic not found')
             return
         else:
-            print message
+            print (message)
             
     def on_open_terminal_button_released(self, widget):
         port=self.port_entry.get_text()
@@ -552,7 +560,7 @@ class Tinybldlin():
         buffer.set_text("")
         
     def on_tx_type_combo_changed(self, widget):
-        print ''
+        print ('')
         
     def on_send_terminal_button_clicked(self, widget):
         tx_type=self.tx_type_combo.get_active_text()
@@ -566,13 +574,13 @@ class Tinybldlin():
             t.send_data('\r')
         
     def on_one_button_clicked(self, widget):
-        print 'on_one_button_clicked'
+        print ('on_one_button_clicked')
         
     def on_two_button_clicked(self, widget):
-        print 'on_two_button_clicked'
+        print ('on_two_button_clicked')
      
     def on_three_button_clicked(self, widget):
-        print 'on_three_button_clicked'   
+        print ('on_three_button_clicked')   
         
     def on_rx_type_combo_changed(self, widget):
         try:
@@ -615,13 +623,13 @@ class Tinybldlin():
             return
         
     def on_b_button_clicked(self, widget):
-        print 'on_b_button_clicked'  
+        print ('on_b_button_clicked')  
         
     def on_h_button_clicked(self, widget):
-        print 'on_h_button_clicked'  
+        print ('on_h_button_clicked')  
         
     def on_r_button_clicked(self, widget):
-        print 'on_r_button_clicked'  
+        print ('on_r_button_clicked')  
         
     def on_terminal_key_press_event(self, widget, event):
         
@@ -643,7 +651,7 @@ class Tinybldlin():
                 t.terminal_type(data)
                 
         except ValueError:
-            print data
+            print (data)
                 
     def on_terminal_data_entry(self,widget,event):
         data=self.terminal_data_entry.get_text()
@@ -652,9 +660,9 @@ class Tinybldlin():
         
     def on_window1_destroy(self, widget):
         self.close=0
-        file_path = self.hexfile_combo.child
-        baud_rate = self.speed_combo.child
-        speed_terminal=self.speed_terminal_combo.child
+        file_path = self.hexfile_combo
+        baud_rate = self.speed_combo
+        speed_terminal=self.speed_terminal_combo
 
         Width,Height= self.window1.get_size()
        
@@ -673,9 +681,9 @@ class Tinybldlin():
 
 
         except:
-            print 'there was an error saving settings'
+            print ('there was an error saving settings')
             gtk.main_quit()
-        print 'good bye'
+        print ('good bye')
         gtk.main_quit()
             
 if __name__ == "__main__":
@@ -683,4 +691,4 @@ if __name__ == "__main__":
         Tinybldlin = Tinybldlin()
         gtk.main()
     except KeyboardInterrupt:
-        print '\nkilled by user'
+        print ('\nkilled by user')

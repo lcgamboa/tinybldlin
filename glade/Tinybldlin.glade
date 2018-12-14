@@ -25,8 +25,9 @@
               <object class="GtkHBox" id="hbox1">
                 <property name="visible">True</property>
                 <child>
-                  <object class="GtkComboBoxEntry" id="hexfile_combo">
-                    <property name="visible">True</property>
+                  <object class="GtkComboBoxText" id="hexfile_combo">
+		    <property name="visible">True</property>
+		    <property name="has_entry">True</property>
                   </object>
                   <packing>
                     <property name="position">0</property>
@@ -200,9 +201,10 @@
                                 <property name="visible">True</property>
                                 <property name="orientation">vertical</property>
                                 <child>
-                                  <object class="GtkComboBoxEntry" id="speed_combo">
+                                  <object class="GtkComboBoxText" id="speed_combo">
                                     <property name="height_request">28</property>
-                                    <property name="visible">True</property>
+				    <property name="visible">True</property>
+				    <property name="has_entry">True</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -471,10 +473,11 @@
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkComboBoxEntry" id="speed_terminal_combo">
+                                              <object class="GtkComboBoxText" id="speed_terminal_combo">
                                                 <property name="width_request">80</property>
                                                 <property name="height_request">30</property>
-                                                <property name="visible">True</property>
+						<property name="visible">True</property>
+						<property name="has_entry">True</property>
                                               </object>
                                               <packing>
                                                 <property name="top_attach">1</property>
@@ -548,9 +551,10 @@
                                                   </packing>
                                                 </child>
                                                 <child>
-                                                  <object class="GtkComboBoxEntry" id="tx_type_combo">
+                                                  <object class="GtkComboBoxText" id="tx_type_combo">
                                                     <property name="width_request">80</property>
-                                                    <property name="visible">True</property>
+						    <property name="visible">True</property>
+						    <property name="has_entry">True</property>
                                                     <signal name="changed" handler="on_tx_type_combo_changed"/>
                                                   </object>
                                                   <packing>
@@ -560,9 +564,10 @@
                                                   </packing>
                                                 </child>
                                                 <child>
-                                                  <object class="GtkComboBoxEntry" id="tx_data_combo">
+                                                  <object class="GtkComboBoxText" id="tx_data_combo">
                                                     <property name="width_request">60</property>
-                                                    <property name="visible">True</property>
+						    <property name="visible">True</property>
+						    <property name="has_entry">True</property>
                                                   </object>
                                                   <packing>
                                                     <property name="position">2</property>
@@ -690,9 +695,10 @@
                                                   </packing>
                                                 </child>
                                                 <child>
-                                                  <object class="GtkComboBoxEntry" id="rx_type_combo">
+                                                  <object class="GtkComboBoxText" id="rx_type_combo">
                                                     <property name="width_request">80</property>
-                                                    <property name="visible">True</property>
+						    <property name="visible">True</property>
+						    <property name="has_entry">True</property>
                                                     <signal name="changed" handler="on_rx_type_combo_changed"/>
                                                   </object>
                                                   <packing>

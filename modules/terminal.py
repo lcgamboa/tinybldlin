@@ -1,7 +1,7 @@
 try: 
     import serial 
 except ImportError:
-    raise ImportError,"Se requiere el modulo python-serial"
+    raise ImportError("Se requiere el modulo python-serial")
 
 import gtk
 import sys
@@ -15,7 +15,7 @@ class Terminal():
         
     def open(self,gui,port,speed):
        
-        print 'Opening port: '+port +' at '+ str(speed)
+        print ('Opening port: '+port +' at '+ str(speed))
         while gtk.events_pending(): gtk.main_iteration()
         gui.close=True
         global ser
@@ -27,7 +27,7 @@ class Terminal():
         ser.flushInput()
         ser.flushOutput()
         ser.close()
-        print 'Terminal Closed'
+        print ('Terminal Closed')
         while gtk.events_pending(): gtk.main_iteration()
             
 

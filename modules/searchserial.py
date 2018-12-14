@@ -1,7 +1,7 @@
 try: 
     import serial 
 except ImportError:
-    raise ImportError,"Se requiere el modulo python-serial"
+    raise ImportError("Se requiere el modulo python-serial")
 
 
 def detect():
