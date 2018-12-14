@@ -22,8 +22,7 @@
 
 import os
 import sys
-import gobject
-#from gi.repository import GObject as gobject
+from gi.repository import GObject as gobject
 sys.path.append("modules")
 import searchserial
 import detectpic
@@ -36,10 +35,9 @@ import terminal
 
 
 try:
-    import gtk
-    #import gi
-    #gi.require_version('Gtk', '3.0')
-    #from gi.repository import Gtk as gtk
+    import gi
+    gi.require_version('Gtk', '3.0')
+    from gi.repository import Gtk as gtk
 except:
     print( 'You need python-gtk2 please install it...\
             \n If you are running ubuntu open a terminal and type:\
@@ -102,18 +100,17 @@ class Tinybldlin():
             self.terminal_window    = builder.get_object('scrolled_terminal_window')
             self.speed_terminal_combo     =builder.get_object('speed_terminal_combo')
             
-            self.terminal_data_entry= self.tx_data_combo
+            self.terminal_data_entry= self.tx_data_combo.get_child()
             
-            #FIXME
-            #self.terminal_data_entry.connect("activate", self.on_terminal_data_entry, self.terminal_data_entry)
+            self.terminal_data_entry.connect("activate", self.on_terminal_data_entry, self.terminal_data_entry)
             
             self.window1.show()
 
             #setting model to hexfile comboboxentry
             model = gtk.ListStore(str)
             self.hexfile_combo.set_model(model)
-            #self.hexfile_combo.set_text_column(0)
-            self.hex_file_entry=self.hexfile_combo
+            #FIXME self.hexfile_combo.set_text_column(0)
+            self.hex_file_entry=self.hexfile_combo.get_child()
 
             #Populating baud rates combo
             speeds = ('115200','57600','38400','19200','9600')
@@ -121,8 +118,8 @@ class Tinybldlin():
             self.set_model_from_list(self.speed_terminal_combo,speeds)
             self.speed_combo.set_active(0)
             self.speed_terminal_combo.set_active(0)
-            speed_entry= self.speed_combo
-            speed_terminal_entry= self.speed_terminal_combo
+            speed_entry= self.speed_combo.get_child()
+            speed_terminal_entry= self.speed_terminal_combo.get_child()
             
             #Populating Rx Tx data types
             tx_data_types = ('char','char\\','Type','TypEcho')
@@ -386,7 +383,7 @@ class Tinybldlin():
             model.append([i])
         cb.set_model(model)
         #if type(cb) == gtk.ComboBoxText:
-            #cb.set_text_column(0)
+            #FIXME cb.set_text_column(0)
         #el
         if type(cb) == gtk.ComboBox:
             cell = gtk.CellRendererText()

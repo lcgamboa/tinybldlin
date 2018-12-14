@@ -7,8 +7,11 @@ try:
 except:
     print ('You need python-serial module')
 try:
-    import gtk
+    import gi
+    gi.require_version('Gtk', '3.0')
+    from gi.repository import Gtk as gtk
 except:
+    #FIXME
     print ('You need python-gtk2 please install it...\
             \n If you are running ubuntu open a terminal and type:\
             \n sudo apt-get install python-gtk2  ')
