@@ -114,7 +114,7 @@ def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts,bsize):
         pic_repaid={}
         for i in range(0,8,2):
             
-            if pic_mem.has_key(i):
+            if i in pic_mem:
                 
                 pic_repaid[k]=pic_mem[i]
                 pic_repaid[k+1]=pic_mem[i+1]
@@ -173,15 +173,15 @@ def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts,bsize):
                 pic_mem[0+2*max_flash-2*bsize]=0x8a
                 pic_mem[1+2*max_flash-2*bsize]=0x01
                 
-                if pic_repaid.has_key(0):
+                if 0 in pic_repaid:
                     pic_mem[2+2*max_flash-2*bsize]=pic_repaid[0]
                     pic_mem[3+2*max_flash-2*bsize]=pic_repaid[1]
                     
-                if pic_repaid.has_key(2):
+                if 2 in pic_repaid:
                     pic_mem[4+2*max_flash-2*bsize]=pic_repaid[2]
                     pic_mem[5+2*max_flash-2*bsize]=pic_repaid[3]
                     
-                if pic_repaid.has_key(3):
+                if 3 in pic_repaid:
                     pic_mem[6+2*max_flash-2*bsize]=pic_repaid[4]
                     pic_mem[7+2*max_flash-2*bsize]=pic_repaid[5]           
                 
@@ -224,8 +224,8 @@ def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts,bsize):
         # so the first 8 bytes (reserved by TinyPic) will be re writen
         # So we have to include a goto max_flash-200+8
         goto_add=((max_flash-bsize+8)/2)
-        hh_goto=(goto_add/0x10000)&0x0F
-        h_goto=(goto_add/0x100)&0xFF
+        hh_goto=(goto_add//0x10000)&0x0F
+        h_goto=(goto_add//0x100)&0xFF
         l_goto=goto_add&0xFF
         
         pic_mem[0]=l_goto
@@ -258,7 +258,7 @@ def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts,bsize):
                 return 'Fail'
 
             
-            if pic_mem.has_key(hex_pos):
+            if hex_pos in pic_mem:
                 mem_block[j]=pic_mem[hex_pos]
                 write_block=True
                 
@@ -286,23 +286,23 @@ def write_mem(pic_pos,mem_block,family,rts):
     
     s.flushInput()
         
-    hm=(pic_pos/256)&255
+    hm=(pic_pos//256)&255
     lm=(pic_pos&255)
     rl=len(mem_block)
 
     if (family=="16F8XX")or(family=="16F8X"):
         # Calculate checksum
         chs=hm+lm+rl
-        s.write(chr(hm)+chr(lm)+chr(rl))
+        s.write(bytes(chr(hm)+chr(lm)+ chr(rl),'latin_1'))
         for i in range(0,rl):
         
             # Calculate checksum
             chs=chs+mem_block[i]
             
-            s.write(chr(mem_block[i]))
+            s.write(bytes(chr(mem_block[i]),'latin_1'))
             
         chs=((-chs)&255)
-        s.write(chr(chs))
+        s.write(bytes(chr(chs),'latin_1'))
 
     if family=="18F":
         # Calculate checksum
@@ -311,17 +311,18 @@ def write_mem(pic_pos,mem_block,family,rts):
         # U TBLPTRH TBLPTRL
         # Todo: Check if U can be different to 0
         #           U TBLPTRH TBLPTRL
-        s.write(chr(0)+chr(hm)+chr(lm)+chr(rl))
+        s.write(bytes(chr(0)+chr(hm)+chr(lm)+ chr(rl),'latin_1'))
         for i in range(0,rl):
             # Calculate checksum
             chs=chs+mem_block[i]
             
-            s.write(chr(mem_block[i]))
+            s.write(bytes(chr(mem_block[i]),'latin_1'))
     
         chs=((-chs)&255)
-        s.write(chr(chs))
+        s.write(bytes(chr(chs),'latin_1'))
 
     ret=s.read(1)
+    ret=ret.decode()
     #ret="K"
     
     if ret!="K":

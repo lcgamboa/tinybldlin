@@ -60,14 +60,15 @@ def check_pic(PORT,BAUD,RESET_RTS):
             time.sleep(.1)
 
     #Ask PIC IDE
-    ser.write(chr(0xC1))
+    ser.write(b'\xC1')
           
     #wait for PIC answer
     ret=ser.read(2)
+    ret=ret.decode()
 
     #close serial port
     ser.close()
-       
+
     #In case there was no answer from pic
     if len(ret)!=2:
         message='Not found, \n ERROR!'

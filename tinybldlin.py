@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: iso-8859-15 -*-
 
 ###############################################################################
@@ -38,6 +38,7 @@ try:
     import gi
     gi.require_version('Gtk', '3.0')
     from gi.repository import Gtk as gtk
+    from gi.repository import Gdk 
 except:
     #FIXME
     print( 'You need python-gtk2 please install it...\
@@ -633,9 +634,9 @@ class Tinybldlin():
         
         type=self.tx_type_combo.get_child().get_text()
         data=event.keyval
-        if event.keyval==gtk.keysyms.Return:
+        if event.keyval==Gdk.KEY_Return:
             data=0x0D
-        elif event.keyval==gtk.keysyms.BackSpace:
+        elif event.keyval==Gdk.KEY_BackSpace:
             data=0x7f     
 
         try:

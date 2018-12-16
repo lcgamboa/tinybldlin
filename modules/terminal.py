@@ -38,7 +38,9 @@ class Terminal():
 
     def reader(self,gui):
        
-        data = ser.read(1)   
+        data = ser.read(1) 
+        data = data.decode()
+
         if len(data)!=0:
             if gui.rx_type_combo.get_active_text()=='char':   
                 #sys.stdout.write(data)
@@ -56,7 +58,7 @@ class Terminal():
         return True
     
     def terminal_type(self,data):
-        ser.write(chr(data))
+        ser.write(bytes(chr(data),'latin_1'))
 
     def clear_terminal(self,gui):
         #get message buffer
@@ -66,7 +68,7 @@ class Terminal():
         
     def send_data(self,data):
         for i in range(0,len(data)):
-            ser.write(data[i])
+            ser.write(bytes(data[i],'latin_1'))
             time.sleep(0.1)
             while gtk.events_pending(): gtk.main_iteration()
             
