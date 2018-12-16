@@ -223,7 +223,7 @@ def transfer_hex(gui,filename,port,baud,type,max_flash,family,rts,bsize):
         # The blocks have to be written using a 64 bytes boundary
         # so the first 8 bytes (reserved by TinyPic) will be re writen
         # So we have to include a goto max_flash-200+8
-        goto_add=((max_flash-bsize+8)/2)
+        goto_add=((max_flash-bsize+8)//2)
         hh_goto=(goto_add//0x10000)&0x0F
         h_goto=(goto_add//0x100)&0xFF
         l_goto=goto_add&0xFF
