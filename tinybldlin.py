@@ -23,6 +23,7 @@
 import os
 import sys
 from gi.repository import GObject as gobject
+from gi.repository import GLib
 sys.path.append("modules")
 import searchserial
 import detectpic
@@ -200,7 +201,7 @@ class Tinybldlin():
                 gtk.main_iteration()
             self.abort_button.hide()
             self.status_icon.set_from_file(red)
-            gobject.timeout_add(2000, self.on_timeout)
+            GLib.timeout_add(2000, self.on_timeout)
             return 
 
         else:
@@ -252,7 +253,7 @@ class Tinybldlin():
             self.abort_button.hide()
             self.status_icon.set_from_file(red)
             self.progress_bar.set_fraction(0)
-            gobject.timeout_add(2000, self.on_timeout)
+            GLib.timeout_add(2000, self.on_timeout)
             return
         
         else:
@@ -274,7 +275,7 @@ class Tinybldlin():
         self.progress_bar.set_fraction(0)
         self.abort_button.hide()
         self.status_icon.set_from_file(green)
-        gobject.timeout_add(2000, self.on_timeout)
+        GLib.timeout_add(2000, self.on_timeout)
  
     def on_checkpic_button_clicked(self, widget):
        
@@ -298,7 +299,7 @@ class Tinybldlin():
             self.write_message(message)
             self.abort_button.hide()
             self.status_icon.set_from_file(red)
-            gobject.timeout_add(2000, self.on_timeout)
+            GLib.timeout_add(2000, self.on_timeout)
             return type,max_flash,family
 
         else:
@@ -336,7 +337,7 @@ class Tinybldlin():
             self.abort_button.hide()
             self.status_icon.set_from_file(red)
             self.progress_bar.set_fraction(0)
-            gobject.timeout_add(2000, self.on_timeout)
+            GLib.timeout_add(2000, self.on_timeout)
             return type,max_flash,family
 
         print (message)
@@ -345,7 +346,7 @@ class Tinybldlin():
         self.progress_bar.set_fraction(0)
         self.abort_button.hide()
         self.status_icon.set_from_file(green)
-        gobject.timeout_add(2000, self.on_timeout)
+        GLib.timeout_add(2000, self.on_timeout)
         return type,max_flash,family
 
         
@@ -361,13 +362,13 @@ class Tinybldlin():
             self.port_entry.set_text('')
             return
         store= gtk.ListStore(str)
-        
         for disp in ports:
             store.append([disp])
-            
         self.port_list.set_model(store)
         rendererText = gtk.CellRendererText()
         column = gtk.TreeViewColumn('Ports', rendererText, text=0)
+        if self.port_list.get_column(0) != None:
+          self.port_list.remove_column(self.port_list.get_column(0))
         self.port_list.append_column(column)
         self.port_entry.set_text(ports[0])
                 
